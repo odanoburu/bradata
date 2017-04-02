@@ -92,7 +92,7 @@ class Download_Unzip(luigi.Task):
         * :py:class:`~.Streams`
         :return: list of object (:py:class:`luigi.task.Task`)
         """
-        return Get_URL()
+        return Get_Header_Relation()
 
     def run(self):
         conn = bradata.connection.Connection()
@@ -119,7 +119,8 @@ class Download_Unzip(luigi.Task):
         with open(self.input().path, 'r') as f:
             data = yaml.load(f)
 
-        return data[tipo]
+
+        return data[tipo]['url']
 
 
 class Aggregat(luigi.Task):
@@ -171,13 +172,13 @@ class Aggregat(luigi.Task):
     def find_header(self, tipo, ano):
         with open(self.input()['header_relation'].path, 'r') as f:
             data = yaml.load(f)
-        print(data)
-        a = data[tipo]
+        a = data[tipo]['columns']
 
-        final = min(data['candidatos'].keys())
+        final = 0
         for k in a.keys():
             if int(ano) >= k:
                 final = k
+
         return str(a[final])
 
 
