@@ -6,7 +6,6 @@ import io
 from zipfile import ZipFile
 import pandas as pd
 import glob
-import requests
 import yaml
 
 import luigi
@@ -66,7 +65,7 @@ class Get_URL(luigi.Task):
         if result['status'] == 'ok':
             result = result['content']
         else:
-            print('File was not dowloaded')
+            raise Exception('File was not dowloaded')
 
         with self.output().open('w') as o_file:
             o_file.write(result)
@@ -180,6 +179,22 @@ class Aggregat(luigi.Task):
                 final = k
 
         return str(a[final])
+
+class Fetch(luigi.Task):
+
+    tipos = luigi.Parameter()
+    years = luigi.Parameter()
+
+    def requires(self):
+
+        tipos = self.string_to_list(self.tipos)
+        years = self.string_to_list(self.years)
+
+        return [Aggregat(tipo=t, year=y) for t in tipos for y in years]
+
+    def string_to_list(self, string):
+        string = string.replace("'",'').replace('[', '').replace(']','').replace(' ', '')
+        return [s for s in string.split(',')]
 
 
 if __name__ == "__main__":
