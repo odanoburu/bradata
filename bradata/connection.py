@@ -29,7 +29,11 @@ class Connection:
 
                 status = req.status_code
                 if status != 200:
+                    if status == 404:
+                        print('ERROR, this link does not exist. Checkout if it is correct')
+                        return {'status': 'error', 'error_type': req.status_code, 'error_desc': req.text, 'content': url}
                     print('ERROR {}. {}'.format(req.status_code, req.text))
+
                     time.sleep(5)
 
                     count += 1
