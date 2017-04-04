@@ -1,6 +1,5 @@
 import bradata.connection
 from bradata.utils import  _unzip
-from bradata import __download_dir__
 
 import os
 import glob
@@ -52,4 +51,4 @@ def download_headers():
     else:
         print('File was not dowloaded')
 
-    unzip_tse(result, __download_dir__))
+    unzip_tse(result, bradata.__download_dir__))
