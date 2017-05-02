@@ -2,6 +2,7 @@ import zipfile
 import os
 import bradata
 import datetime
+import shutil
 
 # this function is reinventing the wheel, check requests.get documentation
 def _make_url(api_house=None, base_url= None, params=None):
@@ -131,3 +132,11 @@ def _parse_time(date, freq='d'):
     if not isinstance(date, datetime.date):
         raise Exception("begin_date or end_date not valid input. input must be string in {} format or a valid datetime object.".format(freq_str))
     return date
+
+def delete_download_directory():
+    """
+    deletes the download directory, along with all its contents.
+    :return: bool: True, if successful.
+    """
+    shutil.rmtree(bradata.__download_dir__)
+    return True
