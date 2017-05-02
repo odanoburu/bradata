@@ -12,6 +12,7 @@ def get_cgu_data(date, cadastro, freq, consulta=None):
     gets some CGU data at http://www.portaldatransparencia.gov.br/. it is 
     wrapped by helper functions that make the library more discoverable. it 
     converts the csv encoding to utf8.
+
     :param date: a string in YYYY-mm-dd format or a datetime object with year, 
     month, and day attributes. if not provided, will get current day (be
     careful if on other timezone than Brasília). input can be constructed by 
@@ -125,4 +126,3 @@ def get_diarias(date=None):
     :return: downloads csv to directory bradata.__download_dir__
     """
     return get_cgu_data(date=date, cadastro='Diarias', freq='m')
-
