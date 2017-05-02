@@ -135,8 +135,9 @@ def _parse_time(date, freq='d'):
 
 def delete_download_directory():
     """
-    deletes the download directory, along with all its contents.
+    deletes the contents in the download directory.
     :return: bool: True, if successful.
     """
     shutil.rmtree(bradata.__download_dir__)
+    os.mkdir(bradata.__download_dir__)
     return True
